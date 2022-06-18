@@ -6,16 +6,16 @@ public class MutantDetector {
     private static final int MUTATION_THRESHOLD = 2;
 
     public static boolean isMutant(String[] dna) {
-        if(!isSquareMatrix(dna)) {
-            throw new IllegalArgumentException("DNA sequence must be an square matrix");
+        if(!isValidMatrix(dna)) {
+            throw new IllegalArgumentException("DNA sequence must be an square matrix of chars ATCG");
         }
 
         char[][] sequence = Arrays.stream(dna).map(String::toCharArray).toArray(char[][]::new);
         return hasEnoughMutations(sequence);
     }
 
-    private static boolean isSquareMatrix(String[] dna) {
-        return Arrays.stream(dna).noneMatch(i -> i.length() != dna.length);
+    private static boolean isValidMatrix(String[] dna) {
+        return Arrays.stream(dna).noneMatch(i -> i.length() != dna.length || !i.matches("^[ATCG]+$"));
     }
 
     private static boolean hasEnoughMutations(char[][] dna) {
